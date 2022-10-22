@@ -1,5 +1,6 @@
 {
   "name": "novika-lang",
+  "publisher": "novika-lang",
   "displayName": "Novika Language",
   "description": "Provides features that are essential for writing Novika in VS Code",
   "version": "0.0.1",
