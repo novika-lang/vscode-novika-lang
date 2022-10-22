@@ -1,0 +1,31 @@
+{
+  "name": "novika-lang",
+  "displayName": "Novika Language",
+  "description": "Provides features that are essential for writing Novika in VS Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "novika",
+      "aliases": ["Novika", "novika"],
+      "extensions": [".nk"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "novika",
+      "scopeName": "source.novika",
+      "path": "./syntaxes/novika.tmLanguage.json"
+    }],
+    "snippets": [
+      {
+        "language": "novika",
+        "path": "./snippets/novika.json"
+      }
+    ]
+  }
+}

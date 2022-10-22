@@ -1,0 +1,48 @@
+{
+	"Insert 'describe' block": {
+		"prefix": "desc",
+		"body": [
+			"describe '$1' [",
+			"\tin $2",
+			"\t",
+			"\t$0",
+			"]"
+		],
+		"description": "Creates a 'describe', which surrounds multiple test cases belonging to the group specified by 'in'."
+	},
+	"Insert a test case": {
+		"prefix": "its",
+		"body": [
+			"it should '$1' [",
+			"\t$0",
+			"]"
+		],
+    "description": "Creates an 'it should' case, which collects results of assertions in it into the test group."
+	},
+  "Insert a test assertion for equality": {
+    "prefix": "ae",
+    "body": [
+      "assert="
+    ]
+  },
+  "Insert a test assertion for death": {
+    "prefix": "ad",
+    "body": [
+      "assertDies"
+    ]
+  },
+  "Insert an inline word definition": {
+    "prefix": "wd",
+    "body": [
+      "[ $0 ] @: $1"
+    ]
+  },
+  "Insert an expanded word definition": {
+    "prefix": "wdd",
+    "body": [
+      "[ $2",
+      "\t$0",
+      "] @: $1"
+    ]
+  }
+}

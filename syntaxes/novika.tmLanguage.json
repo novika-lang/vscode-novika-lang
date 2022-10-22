@@ -1,0 +1,107 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Novika",
+	"patterns": [
+		{
+			"name": "punctuation.definition.variable.pushes.novika",
+			"match": "(?<=\\.|\\s|\\[|\\]|^)([@\\$=]:)\\s+([^\"'\\s\\.\\[\\]]+)(?=\\.|\\s+|\\[|\\]|$)",
+			"captures": {
+				"1": {"name": "keyword.operator.assignment.novika"},
+				"2": {"name": "entry.name.function.novika"}
+			}
+		},
+		{
+			"begin": "\"((\\(\\s+(?:[^\\(\\)]*)\\--(?:[^\\(\\)]*)\\s+\\)):)?",
+			"end": "\"",
+			"name": "comment.block.novika",
+			"beginCaptures": {
+				"0": {"name": "comment.block.begin.novika"},
+				"2": {"name": "markup.heading.comment.effect.novika"}
+			},
+			"endCaptures": {
+				"0": {"name": "comment.block.end.novika"}
+			},
+			"patterns": [
+				{
+					"name": "constant.character.escape.novika",
+					"match": "\\\\[\\\\\"]"
+				}
+			]
+		},
+		{
+			"name": "string.quoted.single.quote.novika",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+				{
+					"name": "constant.character.escape.quote.novika",
+					"match": "\\\\[\\\\ntrve']"
+				},
+				{
+					"name": "invalid.illegal.escape.quote.novika",
+					"match": "\\\\[^\\\\ntrve']"
+				},
+				{
+					"match": "[^'\\\\]"
+				}
+			]
+		},
+		{
+			"name": "constant.numeric.decimal.novika",
+			"match": "(?<=\\.|\\s|\\[|\\]|^)(?:[-+]?\\d(?:[\\d_]*\\d)?(?:\\.\\d(?:[\\d_]*\\d)?)?)(?=\\.|\\s+|\\[|\\]|$)"
+		},
+		{
+			"name":"constant.language.quotedWord.novika",
+			"match": "\\#[^\"'\\s\\[\\]]+"
+		},
+		{
+			"match": "([^\"'\\s\\.\\[\\]]+)|(\\.)",
+			"captures": {
+				"1": { "name": "word.novika", "patterns": [{ "include": "#essential" }] },
+				"2": { "name": "punctuation.fetch.novika" }
+			}
+		}
+	],
+	"repository": {
+		"essential": {
+			"comment": "Highlights words from essential featureset et al. Even though highlighting words is a touchy subject, we do it anyway because these words are used more than they're not.",
+			"patterns": [
+				{
+					"name": "constant.language.boolean.novika",
+					"match": "(?<=\\.|\\s|\\[|\\]|^)(true|false)(?=\\.|\\s+|\\[|\\]|$)"
+				},
+				{
+					"name": "keyword.operator.magnitudal.novika",
+					"comment": "Words concerned with magnitude or those that change magnitude.",
+					"match": "(?<=\\.|\\s|\\[|\\]|^)(\\*\\*|\\<=|\\>=|[-+*/<>]|mod)(?=\\.|\\s+|\\[|\\]|$)"
+				},
+				{
+					"name": "keyword.operator.stack.novika",
+					"comment": "Words concerned with the stack.",
+					"match": "(?<=\\.|\\s|\\[|\\]|^)(stack|dup|drop|swap|nip|over|rot)(?=\\.|\\s+|\\[|\\]|$)"
+				},
+				{
+					"name": "keyword.control.novika",
+					"comment": "Words concerned with flow of control.",
+					"match": "(?<=\\.|\\s|\\[|\\]|^)(\\^|=>|die|conts|cont|ahead|resume|hydrate!?|open|there|do|sel|br|and|or|neither\\?)(?=\\.|\\s+|\\[|\\]|$)"
+				},
+        {
+          "name": "variable.language.this.novika",
+					"comment": "Special kind of highlighting for 'this'.",
+          "match": "(?<=\\.|\\s|\\[|\\]|^)(this)(?=\\.|\\s+|\\[|\\]|$)"
+        },
+				{
+					"name": "keyword.operator.entryworks.novika",
+					"comment": "Words concerned with changing entries.",
+					"match": "(?<=\\.|\\s|\\[|\\]|^)(pushes|opens|entry:submit)(?=\\.|\\s+|\\[|\\]|$)"
+				},
+				{
+					"name": "entity.name.blockworks.novika",
+					"comment": "Words concerned with reading from/writing to blocks.",
+					"match": "(?<=\\.|\\s|\\[|\\]|^)(prototype|parent|new|shallowCopy|fromLeft|fromRight|count|<\\||\\|>|\\|(at|to|slice|[-+])|cherry|shove|eject|inject|thru|top|effect|ls|reparent|befriend|unfriend|friends|slurp|orphan)(?=\\.|\\s+|\\[|\\]|$)"
+				}
+			]
+		}
+	},
+	"scopeName": "source.novika"
+}
