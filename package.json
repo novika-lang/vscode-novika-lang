@@ -3,7 +3,7 @@
   "publisher": "novika-lang",
   "displayName": "Novika Language",
   "description": "Provides features that are essential for writing Novika in VS Code",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "images/logo.png",
   "engines": {
     "vscode": "^1.72.0"
