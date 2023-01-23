@@ -11,6 +11,42 @@
 			}
 		},
 		{
+			"begin": "\"\"\"((\\(\\s+(?:[^\\(\\)]*)\\--(?:[^\\(\\)]*)\\s+\\)):)?",
+			"end": "\"\"\"",
+			"name": "comment.block.novika",
+			"beginCaptures": {
+				"0": {"name": "comment.block.begin.novika"},
+				"2": {"name": "markup.heading.comment.effect.novika"}
+			},
+			"endCaptures": {
+				"0": {"name": "comment.block.end.novika"}
+			},
+			"patterns": [
+				{
+					"name": "constant.character.escape.novika",
+					"match": "\\\\[\\\\\"]"
+				}
+			]
+		},
+		{
+			"name": "string.quoted.single.quote.novika",
+			"begin": "'''",
+			"end": "'''",
+			"patterns": [
+				{
+					"name": "constant.character.escape.quote.novika",
+					"match": "\\\\[\\\\ntrve']"
+				},
+				{
+					"name": "invalid.illegal.escape.quote.novika",
+					"match": "\\\\[^\\\\ntrve']"
+				},
+				{
+					"match": "[^\\\\]"
+				}
+			]
+		},
+		{
 			"begin": "\"((\\(\\s+(?:[^\\(\\)]*)\\--(?:[^\\(\\)]*)\\s+\\)):)?",
 			"end": "\"",
 			"name": "comment.block.novika",
