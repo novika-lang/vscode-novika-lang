@@ -32,13 +32,13 @@
     ]
   },
   "Insert a test assertion for approximate equality": {
-		"prefix": "aae",
-		"body": "assertApprox="
-	},
-	"Insert a test assertion for equality to false": {
-		"prefix": "fae",
-		"body": "= false assert="
-	},
+    "prefix": "aae",
+    "body": "assertApprox="
+  },
+  "Insert a test assertion for equality to false": {
+    "prefix": "fae",
+    "body": "= false assert="
+  },
   "Insert an inline word definition": {
     "prefix": "wd",
     "body": [
