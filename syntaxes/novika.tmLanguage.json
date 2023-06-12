@@ -3,11 +3,35 @@
 	"name": "Novika",
 	"patterns": [
 		{
-			"name": "punctuation.definition.variable.pushes.novika",
-			"match": "(?<=\\.|\\s|\\[|\\]|^)([@\\$=]:)\\s+([^\"'\\s\\.\\[\\]]+)(?=\\.|\\s+|\\[|\\]|$)",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)([@\\$=]:)\\s+([^\"'\\s\\.\\[\\]]+)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)",
 			"captures": {
 				"1": {"name": "keyword.operator.assignment.novika"},
-				"2": {"name": "entry.name.function.novika"}
+				"2": {
+					"patterns": [
+						{
+							"name": "keyword.other.hook.novika",
+							"match": "__[^\"'\\s\\.\\[\\]]+__(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
+						},
+						{
+							"name": "punctuation.definition.entry.name.novika",
+							"match": "[^\"'\\s\\.\\[\\]]+"
+						}
+					]
+				}
+			}
+		},
+		{
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)([@\\$=]\\{)\\s+((?:[^\"'\\s\\.\\[\\]]+)(?:\\s+[^\"'\\s\\.\\[\\]]+)*)\\s+(\\})(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)",
+			"captures": {
+				"1": {
+					"name": "keyword.operator.assignment.novika"
+				},
+				"2": {
+					"name": "punctuation.definition.entry.name.novika"
+				},
+				"3": {
+					"name": "keyword.operator.assignment.novika"
+				}
 			}
 		},
 		{
@@ -84,57 +108,79 @@
 		},
 		{
 			"name": "constant.numeric.decimal.novika",
-			"match": "(?<=\\.|\\s|\\[|\\]|^)(?:[-+]?\\d(?:[\\d_]*\\d)?(?:\\.\\d(?:[\\d_]*\\d)?)?)(?=\\.|\\s+|\\[|\\]|$)"
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(?:[-+]?\\d(?:[\\d_]*\\d)?(?:\\.\\d(?:[\\d_]*\\d)?)?)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
 		},
 		{
 			"name":"constant.language.quotedWord.novika",
-			"match": "\\#[^\"'\\s\\[\\]]+"
+			"match": "\\#[^\"'\\s\\[\\]\\(\\)]+"
 		},
 		{
-			"match": "([^\"'\\s\\.\\[\\]]+)|(\\.)",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)([^\"'\\s\\.\\[\\]\\(\\)]+)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)|(\\.)",
 			"captures": {
-				"1": { "name": "word.novika", "patterns": [{ "include": "#essential" }] },
-				"2": { "name": "punctuation.fetch.novika" }
+				"1": { "patterns": [{"include": "#words"}] },
+				"2": { "name": "keyword.operator.fetch.novika" }
 			}
+		},
+		{
+			"name": "comment.novika",
+			"match": "\\(|\\)"
 		}
 	],
 	"repository": {
-		"essential": {
-			"comment": "Highlights words from essential featureset et al. Even though highlighting words is a touchy subject, we do it anyway because these words are used more than they're not.",
+		"words": {
+			"comment": "Central hub for the kinds of words that are there.",
 			"patterns": [
 				{
-					"name": "constant.language.boolean.novika",
-					"match": "(?<=\\.|\\s|\\[|\\]|^)(true|false)(?=\\.|\\s+|\\[|\\]|$)"
+					"name": "keyword.operator.fetch.novika",
+					"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)->(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
 				},
+				{"include": "#boolean"},
+				{"include": "#magnitudal"},
+				{"include": "#stack"},
+				{"include": "#flow"},
+				{"include": "#this"},
+				{"include": "#entry-section"},
+				{"include": "#blockworks"}
+			]
+		},
+		"boolean": {
+			"name": "constant.language.boolean.novika",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(true|false)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
+		},
+		"magnitudal": {
+			"name": "keyword.operator.magnitudal.novika",
+			"comment": "Words concerned with magnitude or those affecting magnitude.",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(\\*\\*|\\<=|\\>=|[-+*/<>]|mod)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
+		},
+		"stack": {
+			"name": "keyword.operator.stack.novika",
+			"comment": "Words concerned with the stack.",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(stack|dup|drop|swap|nip|over|rot)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
+		},
+		"flow": {
+			"name": "keyword.control.novika",
+			"comment": "Words concerned with flow of control.",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(break|next|\\^|=>|die|conts|cont|ahead|resume|hydrate!?|open|there|do|sel|br:?|and|or|neither\\?)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
+		},
+		"this": {
+			"name": "variable.language.this.novika",
+			"comment": "Special kind of highlighting for 'this'.",
+			"match": "this"
+		},
+		"blockworks": {
+			"name": "entity.name.blockworks.novika",
+			"comment": "Words concerned with reading from/writing to blocks.",
+			"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(\\|\\|?[~-]>|<[~-]\\|\\|?|prototype|parent|(?:shallowN|n)ew|shallowCopy|from(?:Left|Right)\\*?|count|<\\||\\|>|\\|(?:at|to|slice|[-+])|cherry|shove|eject|inject|thru|top|effect|ls|reparent|befriend|unfriend|friends|slurp|orphan)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)"
+		},
+		"entry-section": {
+			"patterns": [
+				{"name": "keyword.other.entry-access", "match": "pushes|opens"},
 				{
-					"name": "keyword.operator.magnitudal.novika",
-					"comment": "Words concerned with magnitude or those that change magnitude.",
-					"match": "(?<=\\.|\\s|\\[|\\]|^)(\\*\\*|\\<=|\\>=|[-+*/<>]|mod)(?=\\.|\\s+|\\[|\\]|$)"
-				},
-				{
-					"name": "keyword.operator.stack.novika",
-					"comment": "Words concerned with the stack.",
-					"match": "(?<=\\.|\\s|\\[|\\]|^)(stack|dup|drop|swap|nip|over|rot)(?=\\.|\\s+|\\[|\\]|$)"
-				},
-				{
-					"name": "keyword.control.novika",
-					"comment": "Words concerned with flow of control.",
-					"match": "(?<=\\.|\\s|\\[|\\]|^)(\\^|=>|die|conts|cont|ahead|resume|hydrate!?|open|there|do|sel|br|and|or|neither\\?)(?=\\.|\\s+|\\[|\\]|$)"
-				},
-        {
-          "name": "variable.language.this.novika",
-					"comment": "Special kind of highlighting for 'this'.",
-          "match": "(?<=\\.|\\s|\\[|\\]|^)(this)(?=\\.|\\s+|\\[|\\]|$)"
-        },
-				{
-					"name": "keyword.operator.entryworks.novika",
-					"comment": "Words concerned with changing entries.",
-					"match": "(?<=\\.|\\s|\\[|\\]|^)(pushes|opens|entry:submit)(?=\\.|\\s+|\\[|\\]|$)"
-				},
-				{
-					"name": "entity.name.blockworks.novika",
-					"comment": "Words concerned with reading from/writing to blocks.",
-					"match": "(?<=\\.|\\s|\\[|\\]|^)(prototype|parent|new|shallowCopy|fromLeft|fromRight|count|<\\||\\|>|\\|(at|to|slice|[-+])|cherry|shove|eject|inject|thru|top|effect|ls|reparent|befriend|unfriend|friends|slurp|orphan)(?=\\.|\\s+|\\[|\\]|$)"
+					"match": "(?<=\\.|\\s|\\[|\\]|\\(|\\)|^)(entry:)(submit|exists\\?|fetch\\??|open|flatFetch\\?|opener\\?|delete|wipeout|pathTo\\?|names\\*?|values\\*?|count)(?=\\.|\\s+|\\[|\\]|\\(|\\)|$)",
+					"captures": {
+						"1": {"name": "entity.name.section.entry"},
+						"2": {"name": "keyword.other.entry-access.novika" }
+					}
 				}
 			]
 		}
